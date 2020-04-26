@@ -1,7 +1,25 @@
 ---
-title: "Linear Algebra Applications in Finding the OLS Estimates"
-author: "Joshua Ingram"
-date: "4/14/2020"
-output: pdf_document
+output: 
+  pdf_document:
+    citation_package: natbib
+    keep_tex: false
+    fig_caption: true
+    latex_engine: pdflatex
+    template: svm-latex-ms.tex
+bibliography: master.bib
+header-includes:
+  -  \usepackage{hyperref}
+biblio-style: apsr
+title: "Applications of Linear Algebra in the OLS Estimator"
+thanks:
+author:
+- name: Joshua D. Ingram
+  affiliation: New College of Florida
+abstract: "This is the final project for the Spring 2020 linear algebra course. This document contains an overview of the use of linear algebra in the ordinary least squares estimator. First, the idea of OLS is explained and the matrix form of a general multiple linear regression model is given. Next, the derivation of the OLS estimator in matrix form is worked through. This is followed by a discussion of some of the assumptions of OLS and their relations to what was learned in linear algebra. Finally, an example (with code) of using the matrix form formula to find our OLS estimates is given."
+keywords: 
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+geometry: margin=1in
+fontsize: 11pt
+# spacing: double
+endnote: no
 ---
-
