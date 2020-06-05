@@ -1,0 +1,44 @@
+---
+title: "Game Theory in Risk"
+author: "Joshua Ingram"
+date: "1/27/2020"
+output: pdf_document
+---
+```{r, include=FALSE}
+library(knitr)
+```
+
+# Overview
+
+Risk is a game of strategic conquest where players go against each other to elimate the enemy armies in all territories. Each player takes turns gaining reinforcement armies, attacking adjacent enemy territories, and moving armies. Games can become quite lengthy, lasting hours to days, but having a solid strategy can help one conquer their foes. While the rules may be simple, the game theory and strategy behind the game tend to get complicated. The focus of this project is to look at the single-move "attack" and "defense" strategies players take when they decide on the number of dice to roll.
+
+# "Attack" Phase
+
+The big-picture game of risk is a sequential game, as players take turns to reinforce, attack, and move armies. In the "attack" phase of a move, players enter into conflicts. These conflicts contain a mix of game-types. The selection of the number of dice to be used is sequential, as both players don't choose at the same time. However, the rolling of dice is simultaneous, so players can't choose the number of dice to roll based on the outcome of the other palyer's roll. Player's should implement strategies to roll a number of dice that minimizes their expected loss or maximizes their enemy's expected loss.
+
+In these "attack" phases, players choose the number of dice to roll. A maximum of 3 for the attacker and a maximum of 2 for the defender, assuming the players have enough armies in their territory to use the maximum amount of dice. The defender wins ties, so in a 1-attacking dice X 1-defending dice roll the defender has a $\frac{21}{36}$ probability of winning. The attacker has a $\frac{15}{36}$ probability of winning. Rather intuitively, it can be seen that as players increase the number of dice they roll, while holding the opposing player's amount constant, their probability of winning increases.
+
+The probabilities for each possible outcome of a single-move "attack" phase can be computed, allowing computations of expected loss given a game situation. Below is the payoff matrix for all possible dice combinations:
+
+```{r, echo=FALSE, tidy=TRUE}
+load("explossdf.RData")
+
+
+pair <- function(x,y) sprintf("(%1.3f,%1.3f)", x,y)
+all_pairs <- c(pair(exp.loss.df[,1],exp.loss.df[,2]), pair(exp.loss.df[,3],exp.loss.df[,4]), pair(exp.loss.df[,5],exp.loss.df[,6]), pair(exp.loss.df[,7],exp.loss.df[,8]), pair(exp.loss.df[,9],exp.loss.df[,10]), pair(exp.loss.df[,11],exp.loss.df[,12]))
+payoff.mat <- as.data.frame(matrix(all_pairs, nrow=3))
+dimnames(payoff.mat) <- list(c("1 Die", "2 Dice", "3 Dice"), c("1 Die", "2 Dice"))
+kable(payoff.mat)
+```
+
+***Note:*** *In the payoff matrix, the pair (Attacker, Defender) represents the payoff for the attacker and defender. Each item represents the expected loss (lower is better) for the corresponding player. The row choices for the number of dice are for the attacker and the column choices are for the defender.*
+
+# Strategies and the Nash Equilibrium
+
+The strategy a player implements is dependent upon the number of armies in their territory, as well as their goal. Does said player want to minimize their own expected loss? Or to maximize the expected loss of the opposing player? Neither player has a dominant strategy, as there is no strategy one can implement that enables them to be better off no matter the decision of the other player. However, there are strategies players can implement given the opponent's move. There are two ways to look at the game. One is where the player desires to minimize their own expected loss. In this case, there are two sets of moves each player takes to be in a Nash Equilibrium. This is where the attacker rolls 1 die and the defender rolls 2 dice (A = 1, D = 2), as well as where the attacker rolls 3 dice and the defender rolls 1 die (A = 3, D = 1). When the player choose to maximize the expected loss of the other, there is only one set of moves for the Nash Equilbrium. This is where the attacker rolls 3 dice and the defender rolls 2 dice (A = 3, D = 2).
+
+As the scope of the game increases, strategies get more and more complex. Looking at a two-move "attack" phase, one can use a game tree to model the expected losses for each player. These can quickly become more and more complex as the number of moves ahead are considered. The entire game of risk, taking into account reinforcement phases, attack phases, movements, and missions, could be studied intensely for a long time. Using concepts from game theory, tools like game trees, expected loss, simultaneous and sequential game strategies, and much more can lead to a comprehensive understanding of a seemingly simple childhood game.
+
+# Shiny App
+
+Accompanying this project is an R Shiny app that outputs the probabilities and expected losses given different game situations. Take a look!
