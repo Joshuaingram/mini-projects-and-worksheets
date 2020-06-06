@@ -3,7 +3,7 @@
 **Status: Ongoing**
 
 ## Introduction
-The purpose of this repository is to hold any smaller projects or worksheets that I have created that aren't large enough to deserve their own. 
+This repository is where I keep any projects/worksheets that aren't really large enough to deserve their own repo. Some of the projects here were made during my own free time or for classes.
 
 ### Projects
 
